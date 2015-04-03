@@ -805,6 +805,8 @@ static void bcm2708_restart(enum reboot_mode mode, const char *cmd)
 /* We can't really power off, but if we do the normal reset scheme, and indicate to bootcode.bin not to reboot, then most of the chip will be powered off */
 static void bcm2708_power_off(void)
 {
+	uint32_t gpfsel0 = 0;
+	uint32_t gpfclr0 = 0;
 	extern char bcm2708_reboot_mode;
 	if(bcm2708_reboot_mode == 'q')
 	{
@@ -818,6 +820,14 @@ static void bcm2708_power_off(void)
 		/* continue with normal reset mechanism */
 		bcm2708_restart(0, "");
 	}
+	pr_info("clear GPIO5 to poweroff the pinball ...\n");
+	gpfsel0 = readl(__io_address(GPIO_BASE));
+	gpfsel0 &= 0xFFFC7FFF ; /* clear gpfsel0[17..15] */
+	gpfsel0 |= 0x00008000 ; /* set gpfsel0[15], gpio5 as output */
+	writel(gpfsel0, __io_address(GPIO_BASE));
+	gpfclr0 = readl(__io_address(GPIO_BASE+0x28));
+	gpfclr0 |= 0x00000020 ; /* set gpfclr0[5], clear gpio5 */
+	writel(gpfclr0, __io_address(GPIO_BASE+0x28));
 }
 
 #ifdef CONFIG_OF
