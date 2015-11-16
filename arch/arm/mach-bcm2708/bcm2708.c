@@ -947,7 +947,7 @@ void __init bcm2708_init(void)
 
 #if defined(CONFIG_SND_BCM2708_SOC_HIFIBERRY_DIGI) || defined(CONFIG_SND_BCM2708_SOC_HIFIBERRY_DIGI_MODULE)
         bcm_register_device_dt(&snd_hifiberry_digi_device);
-        i2c_register_board_info_dt(1, snd_wm8804_i2c_devices, ARRAY_SIZE(snd_wm8804_i2c_devices));
+        i2c_register_board_info_dt(0, snd_wm8804_i2c_devices, ARRAY_SIZE(snd_wm8804_i2c_devices));
 #endif
 
 #if defined(CONFIG_SND_BCM2708_SOC_HIFIBERRY_AMP) || defined(CONFIG_SND_BCM2708_SOC_HIFIBERRY_AMP_MODULE)

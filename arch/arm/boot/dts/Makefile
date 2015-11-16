@@ -1,5 +1,6 @@
 ifeq ($(CONFIG_OF),y)
 
+dtb-$(CONFIG_BCM2708_DT) += bcm2708-pinball.dtb
 dtb-$(CONFIG_BCM2708_DT) += bcm2708-rpi-b.dtb
 dtb-$(CONFIG_BCM2708_DT) += bcm2708-rpi-b-plus.dtb
 dtb-$(CONFIG_BCM2708_DT) += bcm2708-rpi-cm.dtb

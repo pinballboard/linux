@@ -71,7 +71,7 @@ static int gpio_poweroff_probe(struct platform_device *pdev)
 				"Could not set direction of reset GPIO to input\n");
 			return -ENODEV;
 		}
-	} else {
+	} else if (!force) {
 		if (gpiod_direction_output(reset_gpio, 0)) {
 			dev_err(&pdev->dev,
 				"Could not set direction of reset GPIO\n");

@@ -348,7 +348,7 @@ static void bcm2708_i2s_setup_gpio(void)
 	 * this in the device tree!
 	 */
 	int pin,pinconfig,startpin,alt;
-
+#if 0
 	/* SPI is on different GPIOs on different boards */
         /* for Raspberry Pi B+, this is pin GPIO18-21, for original on 28-31 */
 	if (bcm2708_i2s_gpio==BCM2708_I2S_GPIO_AUTO) {
@@ -373,10 +373,13 @@ static void bcm2708_i2s_setup_gpio(void)
 		printk(KERN_INFO "Can't configure I2S GPIOs, unknown pin mode for I2S: %i\n",pinconfig);
 		return;
 	}
-
+#endif
 	/* configure I2S pins to correct ALT mode */
+	startpin=28;
+	alt=BCM2708_I2S_GPIO_PIN28_ALT;
 	for (pin = startpin; pin <= startpin+3; pin++) {
-		bcm2708_i2s_set_function(pin, alt);
+	 if (pin != 30)
+	  	bcm2708_i2s_set_function(pin, alt);
 	}
 }
 
